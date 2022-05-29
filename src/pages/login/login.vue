@@ -6,7 +6,7 @@
                 <span class="svg-container svg-container_login">
                     <svg-icon icon-class="user" />
                 </span>
-                <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="username" />
+                <el-input name="username" type="text" v-model="loginForm.businessId" autoComplete="on" placeholder="username" />
             </el-form-item>
             <el-form-item prop="password">
                 <span class="svg-container">
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { login } from '@/api/permission'
+import axios from 'axios'
 export default {
     data() {
         const validateUsername = (rule, value, callback) => {
@@ -51,11 +51,11 @@ export default {
         }
         return {
             loginForm: {
-                username: 'admin',
+                businessId: 'admin',
                 password: '123456'
             },
             loginRules: {
-                username: [
+                businessId: [
                     {
                         required: true,
                         trigger: 'blur',
@@ -80,19 +80,26 @@ export default {
         },
         async login() {
             try {
-                let data = await login(this.loginForm)
-                let token = data.token
-                this.$store.commit('LOGIN_IN', token)
-                this.$router.push('/')
+                axios.post('/api/myboot/business/login', this.loginForm)
+                    .then((res) => {
+                        if (res.data === 0) {
+                            this.$store.commit('LOGIN_OUT')
+                            alert('Please Log In!')
+                        } else {
+                            alert(res.data)
+                            this.$store.commit('LOGIN_IN', res)
+                            this.$router.push('/')
+                        }
+                    })
             } catch (e) {
-                console.log(e)
+                alert('错误！')
             }
         },
         async signIn() {
             try {
-                let data = await login(this.loginForm)
-                let token = data.token
-                this.$store.commit('LOGIN_IN', token)
+                // let data = await login(this.loginForm)
+                // let token = data.token
+                this.$store.commit('LOGIN_IN', '132')
                 this.$router.push({ path: '/signIn' })
             } catch (e) {
                 console.log(e)

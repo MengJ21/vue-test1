@@ -1,46 +1,46 @@
-/* 订单管理 */
-const Order = () => import('@/pages/business')
-const OrderList = () => import('@/pages/business/myOperation')
-const ProductManage = () => import('@/pages/business/create-business')
-const ReturnGoods = () => import('@/pages/business/personalInformation')
+/* 商家 */
+const Business = () => import('@/pages/business')
+const MyOperation = () => import('@/pages/business/myOperation')
+const CreateOperation = () => import('@/pages/business/create-business')
+const account = () => import('@/pages/business/personalInformation')
 
-/* 产品管理 */
-const Goods = () => import('@/pages/manager')
-
-const GoodsClassify = () => import('@/pages/manager/manageBusiness')
+/* 管理员 */
+const admin = () => import('@/pages/manager')
+const ManageBusiness = () => import('@/pages/manager/manageBusiness')
+const ManageHeTong = () => import('@/pages/manager/manageHetong')
 /* 需要权限判断的路由 */
 const dynamicRoutes = [
     {
-        path: '/order',
-        component: Order,
-        name: 'order-manage',
+        path: '/businessOperation',
+        component: Business,
+        name: 'businessOperation',
         meta: {
             name: '商家合作',
             icon: 'example'
         },
         children: [
             {
-                path: 'list',
-                name: 'order-list',
-                component: OrderList,
+                path: 'myOperation',
+                name: 'myOperation',
+                component: MyOperation,
                 meta: {
                     name: '我的合作',
                     icon: 'table'
                 }
             },
             {
-                path: 'product',
-                name: 'product-manage',
-                component: ProductManage,
+                path: 'createOperation',
+                name: 'createOperation',
+                component: CreateOperation,
                 meta: {
                     name: '创建合作',
                     icon: 'user'
                 }
             },
             {
-                path: 'returnGoods',
-                name: 'product-list',
-                component: ReturnGoods,
+                path: 'accountManage',
+                name: 'accountManage',
+                component: account,
                 meta: {
                     name: '账号管理',
                     icon: 'nested'
@@ -49,20 +49,29 @@ const dynamicRoutes = [
         ]
     },
     {
-        path: '/goods',
-        component: Goods,
-        name: 'goods',
+        path: '/admin',
+        component: admin,
+        name: 'admin',
         meta: {
             name: '管理员',
             icon: 'user'
         },
         children: [
             {
-                path: 'classify',
-                name: 'goods-classify',
-                component: GoodsClassify,
+                path: 'manageBusiness',
+                name: 'manageBusiness',
+                component: ManageBusiness,
                 meta: {
                     name: '管理商家',
+                    icon: 'tree'
+                }
+            },
+            {
+                path: 'manageHeTong',
+                name: 'manageHeTong',
+                component: ManageHeTong,
+                meta: {
+                    name: '管理合同',
                     icon: 'tree'
                 }
             }
